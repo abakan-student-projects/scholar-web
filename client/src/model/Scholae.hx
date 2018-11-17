@@ -171,6 +171,7 @@ class Scholae
                     function(sessionMessage) {
                         Session.sessionId = sessionMessage.sessionId;
                         store.dispatch(RegisteredAndAuthenticated(sessionMessage));
+                        UIkit.notification({ message: Std.string(sessionMessage.firstAuthMes), timeout: 3000 });
                     },
                     function(e) {
                         store.dispatch(RegistrationFailed(e));

@@ -8,5 +8,6 @@ typedef SessionMessage = {
     firstName: String,
     lastName: String,
     roles: Roles,
-    sessionId: String
+    sessionId: String,
+    ?firstAuthMes: String
 }

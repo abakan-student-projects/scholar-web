@@ -25,13 +25,14 @@ class AuthService {
     /**
     * return Session ID, String
     **/
-    public function authenticate(email: String, password: String): ResponseMessage {
+    public function authenticate(email: String, password: String, firstAuth: Bool = false): ResponseMessage {
         var user = User.getUserByEmailAndPassword(email, password);
         if (null != user) {
             if (canAuth(user.registrationDate, user.emailActivated)) {
                 var session = Session.getSessionByUser(user);
                 if (null != session && null != Session.manager.search({ id: session.id }).first()) session.update() else session.insert();
-                return ServiceHelper.successResponse(user.toSessionMessage(session.id));
+                return if (!firstAuth) ServiceHelper.successResponse(user.toSessionMessage(session.id));
+                    else ServiceHelper.successResponse(user.toSessionMessage(session.id, "Добро пожаловать! Проверьте, пожалуйста, электронную почту, чтобы активировать вашу регистрацию!"));
             } else return ServiceHelper.failResponse("You can't sign in. The email activation period has expired.");
         }
         return ServiceHelper.failResponse("Email or password is wrong.");
@@ -121,7 +122,7 @@ Scholae';
             u.insert();
             greetUser(u);
 
-            return authenticate(user.email, user.password);
+            return authenticate(user.email, user.password, true);
         }
     }
 
