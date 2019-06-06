@@ -1,5 +1,7 @@
 package services;
 
+import messages.ArrayChunk;
+import messages.TaskMessage;
 import messages.UserMessage;
 import js.Promise;
 
@@ -28,6 +30,14 @@ class AdminServiceClient extends BaseServiceClient {
     public function UpdateRoleUsers(user: UserMessage): Promise<UserMessage> {
         return request(function(success, fail) {
             context.EditorService.updateRole.call([user], function(e) {
+                processResponse(e, success, fail);
+            });
+        });
+    }
+
+    public function testAdaptiveDemo(tasksCount: Int): Promise<Array<TaskMessage>> {
+        return request(function(success, fail) {
+            context.EditorService.testAdaptiveDemo.call([tasksCount], function(e) {
                 processResponse(e, success, fail);
             });
         });

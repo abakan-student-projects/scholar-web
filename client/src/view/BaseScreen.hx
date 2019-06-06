@@ -61,6 +61,11 @@ class BaseScreen
         if (state.scholae.auth.loggedIn && state.scholae.auth.roles.has(Role.Administrator))
             jsx('<li className=${if(props.location.pathname.indexOf("/administrator") == 0) "uk-active" else ""}>
                         <Link to="/administrator/">Администратор</Link>
+                        <div className="uk-navbar-dropdown">
+                        <ul className="uk-nav uk-navbar-dropdown-nav">
+                            <li><Link to="/administrator/adaptive-demo">Адаптивный подбор</Link></li>
+                        </ul>
+                        </div>
                     </li>')
         else
             null;

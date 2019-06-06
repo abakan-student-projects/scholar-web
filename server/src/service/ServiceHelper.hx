@@ -1,5 +1,6 @@
 package service;
 
+import model.CodeforcesTag;
 import Lambda;
 import messages.MessagesHelper;
 import model.User;

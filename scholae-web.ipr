@@ -160,6 +160,8 @@
       <module fileurl="file://$PROJECT_DIR$/server-shared/server-shared.iml" filepath="$PROJECT_DIR$/server-shared/server-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/static/static.iml" filepath="$PROJECT_DIR$/static/static.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test/test.iml" filepath="$PROJECT_DIR$/test/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test/test.iml" filepath="$PROJECT_DIR$/test/test/test.iml" />
       <module fileurl="file://$PROJECT_DIR$/worker/worker.iml" filepath="$PROJECT_DIR$/worker/worker.iml" />
     </modules>
   </component>
@@ -251,6 +253,27 @@
     <library name="react" type="Haxe">
       <CLASSES>
         <root url="file://$PROJECT_DIR$/lib/react/src/lib" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="TestMain">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/test/build/tmp/runner/TestMain.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="TestMain1">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/test/report/test-runner/TestMain.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="TestMain2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/test/build/java_test/TestMain.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

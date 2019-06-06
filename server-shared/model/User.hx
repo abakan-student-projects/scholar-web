@@ -257,7 +257,7 @@ class User extends sys.db.Object {
         var res: Array<RatingCategory> = [];
         var attempts = Attempt.manager.search(($userId == userId) && ($solved == true));
         var tagIds = CodeforcesTag.manager.all();
-        var taskIds = [for (a in attempts) a.task.id];
+        var taskIds = [for (a in attempts) if (a.task != null) a.task.id];
         var taskTagIds = CodeforcesTaskTag.manager.search($taskId in taskIds);
         var ratingLearnerCategoryTask: Float = 0;
         var ratingByTask: Float = 0;

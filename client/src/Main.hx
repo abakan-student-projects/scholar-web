@@ -1,5 +1,6 @@
 package;
 
+import view.editor.AdminAdaptiveScreen;
 import view.UserAchievementScreen;
 import notification.NotificationMessage;
 import services.NotificationServiceClient;
@@ -96,6 +97,7 @@ class Main {
     					    <Route path="problems" component=$EditorTasksScreen />
 					    </Route>
 					    <Route path="administrator" component=$AdminUsersScreen onEnter=$requireAuth />
+					    <Route path="administrator/adaptive-demo" component=$AdminAdaptiveScreen />
 					    <Route path="renew-password-response" component=$RenewPasswordResponseView/>
 					    <Route path="student-project" component=$StudentProjectScreen />
 					    <Route path="profile" component=$UserProfileScreen />

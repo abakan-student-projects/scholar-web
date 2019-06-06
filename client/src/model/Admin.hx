@@ -18,7 +18,8 @@ class Admin
     implements IMiddleware<AdminAction, ApplicationState> {
 
     public var initState: AdminState = {
-        users: RemoteDataHelper.createEmpty()
+        users: RemoteDataHelper.createEmpty(),
+        tasks: RemoteDataHelper.createEmpty()
     };
 
     public var store: StoreMethods<ApplicationState>;
@@ -42,6 +43,9 @@ class Admin
                     }
                 }
                 copy(state, { });
+
+            case TestAdaptiveDemo(tasksCount): copy(state, {tasks: RemoteDataHelper.createLoading() });
+            case TestAdaptiveDemoFinished(tasks): copy(state, { tasks: RemoteDataHelper.createLoaded(tasks) });
         }
     }
 
@@ -64,6 +68,13 @@ class Admin
                 next();
             case UpdateRoleUsersFinished(user):
                 UIkit.notification({ message: "Роль изменена", timeout: 3000 });
+                next();
+
+            case TestAdaptiveDemo(tasksCount) :
+                    AdminServiceClient.instance.testAdaptiveDemo(tasksCount)
+                        .then(function(tasks) {
+                        store.dispatch(TestAdaptiveDemoFinished(tasks));
+                    });
                 next();
 
             default: next();

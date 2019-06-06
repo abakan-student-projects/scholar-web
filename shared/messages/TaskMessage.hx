@@ -1,5 +1,11 @@
 package messages;
 
+typedef RatingByTag = {
+    tagId: Float,
+    name:String,
+    rating: Float
+}
+
 typedef TaskMessage = {
     id: Float,
     name: String,
@@ -8,5 +14,7 @@ typedef TaskMessage = {
     isGymTask: Bool,
     codeforcesContestId: Int,
     codeforcesIndex: String,
-    isSolved: Bool
+    isSolved: Bool,
+    ?rating: Float,
+    ?ratingByTag: Array<RatingByTag>
 }

@@ -67,7 +67,39 @@ class CodeforcesTask extends sys.db.Object {
             isGymTask: isGymTask(),
             codeforcesContestId: contestId,
             codeforcesIndex: contestIndex,
-            isSolved: isSolved(user)
+            isSolved: isSolved(user),
+            rating: getRatingByTaskTest(this.id),
+            ratingByTag: getRatingTag(this.id)
         };
+    }
+
+    public function getRatingByTaskTest(taskId: Float) {
+        var rating: Float = 0;
+        var tagIds = CodeforcesTag.manager.all();
+        var taskTags = CodeforcesTaskTag.manager.search($taskId == taskId);
+        var ratingLearnerCategoryTask: Float = 0;
+        var ratingByTask: Float = 0;
+        for (t in taskTags) {
+            ratingLearnerCategoryTask = Math.pow(2, t.task.level-1) * (t.tag.importance/tagIds.length);
+            if (ratingLearnerCategoryTask != 0) {
+                ratingLearnerCategoryTask = Math.log(ratingLearnerCategoryTask+1);
+                ratingByTask += Math.round(ratingLearnerCategoryTask*100)/100;
+            }
+        }
+        return ratingByTask;
+    }
+
+    public function getRatingTag(taskId: Float){
+        var ratingBytag: Array<RatingByTag> = [];
+        var taskTag = CodeforcesTaskTag.manager.search($taskId == taskId);
+        var allTags = CodeforcesTag.manager.all();
+        var rating: Float = 0;
+        for (t in taskTag) {
+            if (t.task != null && t.tag != null) {
+                rating = Math.pow(2, t.task.level-1)*(t.tag.importance/allTags.length);
+                ratingBytag.push({tagId: t.tag.id,name: if (t.tag.russianName != null) t.tag.russianName else t.tag.name, rating: Math.round(rating*100)/100});
+            }
+        }
+        return ratingBytag;
     }
 }

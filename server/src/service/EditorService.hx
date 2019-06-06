@@ -1,13 +1,15 @@
 package service;
 
+import Lambda;
+import utils.IterableUtils;
+import Lambda;
+import Array;
 import messages.UserMessage;
 import haxe.EnumTools;
 import model.User;
 import haxe.EnumTools;
 import messages.LinkTypes;
 import haxe.EnumTools.EnumValueTools;
-import Lambda;
-import Lambda;
 import model.LinksForTags;
 import messages.LinksForTagsMessage;
 import model.CodeforcesTaskTag;
@@ -157,6 +159,21 @@ class EditorService {
             } else {
                 return ServiceHelper.failResponse("Задача id=" + taskId + " не существует.");
             }
+        });
+    }
+
+    public function testAdaptiveDemo(tasksCount: Int): ResponseMessage {
+        return authorize(function() {
+            var currentRating = TeacherService.getRatingCategory(0);
+            var curRating = IterableUtils.createStringMap(currentRating, function(c){return Std.string(c.id);});
+            var tags = [for (t in CodeforcesTag.manager.all()) t];
+            var tasks = [for (t in CodeforcesTask.manager.all()) t];
+            var taskTags = [for (t in CodeforcesTaskTag.manager.all()) t];
+            var tasksTagsMap = IterableUtils.createStringMapOfArrays(taskTags, function(t){return if (t.task != null) Std.string(t.task.id) else null;});
+            var tasks = AdaptiveLearning.selectTasksForChart(tasks, curRating, tasksCount, tags, tasksTagsMap);
+            return ServiceHelper.successResponse(
+                Lambda.array(Lambda.map(
+                    tasks, function(t) {return t.toMessage();})));
         });
     }
 }
